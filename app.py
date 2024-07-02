@@ -9,18 +9,17 @@ def fetch_poster(movie_id):
     return "https://image.tmdb.org/t/p/w500/"+data['poster_path']
 def recommend(movie):
     movie_idx=movies[movies['title']==movie].index[0]
-    if movie_idx<=3500:
-        dist=similarity[movie_idx]
-        movies_list=sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:6]
-        recommended_movies=[]
-        recommended_movies_posters=[]
-        for i in movies_list:
-            movie_id=movies.iloc[i[0]].movie_id
-            recommended_movies.append(movies.iloc[i[0]].title)
-            recommended_movies_posters.append(fetch_poster(movie_id))
-        return recommended_movies,recommended_movies_posters
-    else:
-        return "Movie is not included in the app"
+    dist=similarity[movie_idx]
+    movies_list=sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:6]
+    recommended_movies=[]
+    recommended_movies_posters=[]
+    for i in movies_list:
+        movie_id=movies.iloc[i[0]].movie_id
+        recommended_movies.append(movies.iloc[i[0]].title)
+        recommended_movies_posters.append(fetch_poster(movie_id))
+    return recommended_movies,recommended_movies_posters
+        
+    
 
 movies_dict=pickle.load(open('movie_dict.pkl','rb'))
 movies=pd.DataFrame(movies_dict)
