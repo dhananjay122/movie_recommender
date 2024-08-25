@@ -35,7 +35,7 @@ if st.button('Recommend'):
     for i in range(number_of_movies):
         col1,col2,col3,col4,col5=st.columns(5)
         rows=number_of_movies*[1]
-        Rows=st.rows(number_of_movie//5)
+        Rows=st.rows(number_of_movies//5)
         for j in rows:
             if i<=(number_of_movies-5):
                 with col1,Rows[j]:
