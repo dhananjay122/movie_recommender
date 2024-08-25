@@ -10,7 +10,6 @@ def fetch_poster(movie_id):
 def recommend(movie):
     movie_idx=movies[movies['title']==movie].index[0]
     dist=similarity[movie_idx]
-    number_of_movies=int(st.selectbox("Enter the number of movies to be recommended"))
     movies_list=sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:number_of_movies+1]
     recommended_movies=[]
     recommended_movies_posters=[]
@@ -26,12 +25,13 @@ movies_dict=pickle.load(open('movie_dict.pkl','rb'))
 movies=pd.DataFrame(movies_dict)
 similarity=pickle.load(open('similarity.pkl','rb'))
 st.title('Movie Recommendation System')
+number_of_movies=st.number_input("Enter the number of movies to be recommended")
 selection_of_movie=st.selectbox(
 "Type movie name to be recommended",
 movies['title'].values
 )
 if st.button('Recommend'):
-    names,posters=recommend(selection_of_movie)
+    names,posters=recommend(selection_of_movie,number_of_movies)
     for i in range(number_of_movies):
         col1,col2,col3,col4,col5=st.columns(5)
         rows=number_of_movies*[1]
