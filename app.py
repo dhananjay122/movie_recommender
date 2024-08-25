@@ -10,7 +10,7 @@ def fetch_poster(movie_id):
 def recommend(movie):
     movie_idx=movies[movies['title']==movie].index[0]
     dist=similarity[movie_idx]
-    movies_list=sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:6]
+    movies_list=sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:]
     recommended_movies=[]
     recommended_movies_posters=[]
     for i in movies_list:
