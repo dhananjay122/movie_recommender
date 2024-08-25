@@ -10,14 +10,15 @@ def fetch_poster(movie_id):
 def recommend(movie):
     movie_idx=movies[movies['title']==movie].index[0]
     dist=similarity[movie_idx]
-    movies_list=sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:10]
+    number_of_movies=int(st.selectbox("Enter the number of movies to be recommended"))
+    movies_list=sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:number_of_movies+1]
     recommended_movies=[]
     recommended_movies_posters=[]
     for i in movies_list:
         movie_id=movies.iloc[i[0]].movie_id
         recommended_movies.append(movies.iloc[i[0]].title)
         recommended_movies_posters.append(fetch_poster(movie_id))
-    return recommended_movies,recommended_movies_posters
+    return recommended_movies,recommended_movies_posters,number_of_movies
         
     
 
@@ -31,20 +32,26 @@ movies['title'].values
 )
 if st.button('Recommend'):
     names,posters=recommend(selection_of_movie)
-
-    col1,col2,col3,col4,col5=st.columns(5)
-    with col1:
-        st.text(names[0])
-        st.image(posters[0])
-    with col2:
-        st.text(names[1])
-        st.image(posters[1])
-    with col3:
-        st.text(names[2])
-        st.image(posters[2])
-    with col4:
-        st.text(names[3])
-        st.image(posters[3])
-    with col5:
-        st.text(names[4])
-        st.image(posters[4])
+    for i in range(number_of_movies):
+        col1,col2,col3,col4,col5=st.columns(5)
+        rows=number_of_movies*[1]
+        Rows=st.rows(number_of_movie//5)
+        for j in rows:
+            if i<=(number_of_movies-5):
+                with col1,Rows[j]:
+                    st.text(names[i])
+                    st.image(posters[i])
+                with col2,Rows[j]:
+                    st.text(names[i+1])
+                    st.image(posters[i+1])
+                with col3,Rows[j]:
+                    st.text(names[i+2])
+                    st.image(posters[i+2])
+                with col4,Rows[j]:
+                    st.text(names[i+3])
+                    st.image(posters[i+3])
+                with col5,Rows[j]:
+                    st.text(names[i+4])
+                    st.image(posters[i+4])
+            else:
+                pass
